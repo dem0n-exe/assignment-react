@@ -10,9 +10,11 @@ export default class ListItem extends Component {
         };
     }
 
-    deleteProperty(name) {
+    deleteProperty(property) {
+        var index = this.state.properties.indexOf(property);
+        this.state.properties.splice(index,1);
         this.setState({
-            properties: this.state.properties.filter(property => property.name !== name)
+            properties: this.state.properties
         });
     }
 
@@ -23,7 +25,7 @@ export default class ListItem extends Component {
             <td>{currentProperty.description}</td>
             <td>{currentProperty.size}</td>
             <td>
-                <a className="btn btn-primary" href="/#" onClick={() => { this.deleteProperty(currentProperty.name) }} role="button">Delete</a>
+                <a className="btn btn-primary" href="/#" onClick={() => { this.deleteProperty(currentProperty) }} role="button">Delete</a>
             </td>
         </tr>
         )
