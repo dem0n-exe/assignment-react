@@ -3,32 +3,17 @@ import ListItem from './ListItem';
 import Table from 'react-bootstrap/Table';
 import AddPropertyDialog from './AddPropertyDialog';
 import React, { Component } from 'react';
-import Property from './models/Property';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      properties:[]
+      refresh:false
     }
-    this.setDummyData()
   }
 
-  callbackFunction = (childData) => {
-    this.setState({properties:childData});
-  }
-  
-  setDummyData() {
-    console.log('adding dummy data')
-    let property1 = new Property('House 1','Good house with front lawn',400);
-    let property2 = new Property('House 2','Good house with back lawn',300);
-    const propertiesList = this.state.properties
-    propertiesList.push(property1)
-    propertiesList.push(property2)
-    this.setState({
-      properties: propertiesList
-    });
-    console.log(this.state.properties)
+  callbackFunction = (refreshValue) => {
+    this.setState({refresh:refreshValue});
   }
 
   render() {
@@ -46,10 +31,10 @@ class App extends Component {
               </tr>
             </thead>
             <tbody>
-              <ListItem dataFromParent={this.state.properties} />
+              <ListItem refresh={this.state.refresh} />
             </tbody>
           </Table>
-          <AddPropertyDialog dataFromParent={this.state.properties} parentCallback={this.callbackFunction}/>
+          <AddPropertyDialog parentCallback={this.callbackFunction}/>
       </div>
       </>
     );

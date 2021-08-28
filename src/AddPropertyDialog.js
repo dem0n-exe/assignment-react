@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form'
-import Property from './models/Property';
 
 export default class AddPropertyDialog extends Component  {
     constructor(props){
@@ -32,18 +31,33 @@ export default class AddPropertyDialog extends Component  {
     }
 
     handleSave(){
-      let property = new Property(this.state.name,this.state.description,this.state.size)
-      const propertiesList = this.state.properties
-      propertiesList.push(property)
+      var Airtable = require('airtable');
+      var base = new Airtable({apiKey: 'keyF0lNsmSYSi7ISM'}).base('app8I82hxRIpOOx0z');
+      base('property-table').create([
+        {
+          "fields": {
+            "name": this.state.name,
+            "description": this.state.description,
+            "size": this.state.size
+          }
+      }],
+      {typecast:true},
+      function(err, records) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        records.forEach(function (record) {
+          console.log(record.getId());
+        });
+      });
       this.setState({
-          properties: propertiesList,
-          show: false,
-          name: '',
-          description: '',
-          size: 0
+        show: false,
+        name: '',
+        description: '',
+        size: 0
       })
-      console.log(this.state.properties);
-      this.props.parentCallback(this.state.properties);
+      this.props.parentCallback(true);
     }
 
     render() {
