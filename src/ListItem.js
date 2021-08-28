@@ -4,7 +4,8 @@ export default class ListItem extends Component {
     constructor(props){
         super(props);
         this.state = {
-            properties: []
+            properties: [],
+            refresh: false
         }
         this.deleteProperty = this.deleteProperty.bind(this);
     }
@@ -28,10 +29,18 @@ export default class ListItem extends Component {
     }
 
     deleteProperty(property) {
-        var index = this.state.properties.indexOf(property);
-        this.state.properties.splice(index,1);
+        var Airtable = require('airtable');
+        var base = new Airtable({apiKey: 'keyF0lNsmSYSi7ISM'}).base('app8I82hxRIpOOx0z');
+        base('property-table').destroy(property.id, function(err, deletedRecord) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log('Deleted record', deletedRecord.id);
+        });
+
         this.setState({
-            properties: this.state.properties
+            refresh: !this.state.refresh,
         });
     }
 
