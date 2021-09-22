@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import Button from 'react-bootstrap/esm/Button';
 
 export default class ListItem extends Component {
     constructor(props){
         super(props);
         this.state = {
             properties: [],
-            refresh: false
+            refresh: false,
+            loading: true
         }
         this.deleteProperty = this.deleteProperty.bind(this);
     }
@@ -23,7 +25,7 @@ export default class ListItem extends Component {
         fetch(uri)
         .then(res => res.json())
         .then(res => {
-            this.setState({properties:res.records})
+            this.setState({properties:res.records, loading: false});
         })
         .catch(error => console.log(error))
     }
@@ -40,23 +42,30 @@ export default class ListItem extends Component {
         });
 
         this.setState({
-            refresh: !this.state.refresh,
+            refresh: !this.state.refresh
         });
     }
 
     propertyList() {
-        return this.state.properties.map(currentProperty => { 
-            return(
-            <tr key={currentProperty.fields.name}>
-            <td>{currentProperty.fields.name}</td>
-            <td>{currentProperty.fields.description}</td>
-            <td>{currentProperty.fields.size}</td>
-            <td>
-                <a className="btn btn-primary" href="/#" onClick={() => { this.deleteProperty(currentProperty) }} role="button">Delete</a>
-            </td>
-        </tr>
-        )
-        });
+        if(this.state.loading){
+            return(<h3>Loading...</h3>)
+        }
+        else {
+            return this.state.properties.map(currentProperty => { 
+                return(
+                    <>
+                <tr key={currentProperty.fields.name}>
+                <td>{currentProperty.fields.name}</td>
+                <td>{currentProperty.fields.description}</td>
+                <td>{currentProperty.fields.size}</td>
+                <td>
+                    <a className="btn btn-primary" href="/#" onClick={() => { this.deleteProperty(currentProperty) }} role="button">Delete</a>
+                </td>
+            </tr>
+            </>
+            )
+            });
+        }
     }
     
     render(){
