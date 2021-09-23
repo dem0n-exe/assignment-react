@@ -7,6 +7,8 @@ phases:
   pre_build:
     commands:
       - echo pre build maybe install dependencies here...
+      - cd /var/www/
+      - sudo rm -rf *
   build:
     commands:
       - echo Build started on `date`
