@@ -1,23 +1,19 @@
-# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
 version: 0.2
+
 phases:
+  install:
+    commands:
+      - echo install packages here.
   pre_build:
     commands:
-      #installs dependencies into the node_modules/ directory
-      - echo install packages here.
+      - echo pre build maybe install dependencies here...
   build:
     commands:
       - echo Build started on `date`
-      - echo Compiling
-      - npm run build
+      - echo might use this to run mocha
   post_build:
     commands:
       - echo Build completed on `date`
-# Include only the files required for your application to run.
 artifacts:
-  files:
-    - public/**/*
-    - src/**/*
-    - package.json
-    - appspec.yml
-    - scripts/**/*
+   files:
+     - '**/*'
