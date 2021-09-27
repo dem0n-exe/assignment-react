@@ -4,15 +4,16 @@ phases:
   install:
     commands:
       - echo install packages here.
+      - curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      - sudo apt-get install -y nodejs
   pre_build:
     commands:
       - echo pre build maybe install dependencies here...
-      - cd /var/www/
-      - sudo rm -rf *
+      - npm install
   build:
     commands:
       - echo Build started on `date`
-      - echo might use this to run mocha
+      - npm run build
   post_build:
     commands:
       - echo Build completed on `date`
