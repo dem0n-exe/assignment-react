@@ -3,6 +3,6 @@
 
 # simply stop the application process using pm2
 echo stopping server
-sudo su
-pm2 stop npm
+# sudo su
+# pm2 stop npm
 exit
