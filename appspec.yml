@@ -4,18 +4,23 @@ files:
   - source: /
     destination: /var/www/
 hooks:
+  ApplicationStop:
+    - commands: chmod +x scripts/stop_server.sh
+    - location: scripts/stop_server.sh
+      timeout: 300
+      runas: root
   BeforeInstall:
-    - chmod +x scripts/install_dependencies.sh
+    - commands: chmod +x scripts/install_dependencies.sh
     - location: scripts/install_dependencies.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - chmod +x scripts/start_server.sh
+    - commands: chmod +x scripts/start_server.sh
     - location: scripts/start_server.sh
       timeout: 300
       runas: root
   ValidateService:
-    - chmod +x scripts/validate_server.sh
+    - commands: chmod +x scripts/validate_server.sh
     - location: scripts/validate_server.sh
       timeout: 300
       runas: root
