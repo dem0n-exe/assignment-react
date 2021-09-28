@@ -5,4 +5,4 @@
 echo stopping server
 # sudo su
 # pm2 stop npm
-exit
+# exit
