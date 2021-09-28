@@ -4,11 +4,6 @@ files:
   - source: /
     destination: /var/www/
 hooks:
-  ApplicationStop:
-    - chmod +x scripts/stop_server.sh
-    - location: scripts/stop_server.sh
-      timeout: 300
-      runas: root
   BeforeInstall:
     - chmod +x scripts/install_dependencies.sh
     - location: scripts/install_dependencies.sh
